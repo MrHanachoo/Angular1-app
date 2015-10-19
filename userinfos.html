@@ -1,37 +1,6 @@
-<!DOCTYPE html>
-<html ng-app="githubViewer">
-
-<head>
-	<title>my first angular app</title>
-	<script src="angular.js"></script>
-	<script src="script.js"></script>
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-
-<body ng-controller="MainController">
-
-	<div >
-		<h1>{{message}}</h1>
-	</div>
-
-	<div>
-		{{error}}
-	</div>
-
-	<div>
-		<form name="searchUser" ng-submit="search(username)">
-			<input type="search" required placeholder="GitHub Username" ng-model="username"/>
-			<input type="submit" value="Search">
-		</form>			
-	</div>
-
-	<div ng-include="'userinfos.html'" ng-show="user"> </div>
-
-	<div ng-show="user">
-		<div>
+<div>
 	<h2>Name: {{user.name}}</h2>
 				<!--
-
 				<img ng-src="http://www.gravatar.com/avatar/{{user.gravatar_id}}" title="{{user.login}}">
 			-->
 	<img ng-src="{{user.avatar_url}}" title="{{user.username}}">
@@ -60,6 +29,3 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
-</body>
-</html>
