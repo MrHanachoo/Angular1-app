@@ -5,61 +5,24 @@
 	<title>my first angular app</title>
 	<script src="angular.js"></script>
 	<script src="script.js"></script>
+	<script src="github.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body ng-controller="MainController">
+	<h1>{{message}}</h1>
+	<div>{{error}}</div>
 
-	<div >
-		<h1>{{message}}</h1>
+	{{ countdown }}
+	<form name="searchUser" ng-submit="search(username)">
+		<input type="search" required placeholder="GitHub Username" ng-model="username"/>
+		<input type="submit" value="Search">
+	</form>			
+	
+	<div ng-include="'userinfos.html'" ng-show="user">
+		
 	</div>
 
-	<div>
-		{{error}}
-	</div>
-
-	<div>
-		<form name="searchUser" ng-submit="search(username)">
-			<input type="search" required placeholder="GitHub Username" ng-model="username"/>
-			<input type="submit" value="Search">
-		</form>			
-	</div>
-
-	<div ng-include="'userinfos.html'" ng-show="user"> </div>
-
-	<div ng-show="user">
-		<div>
-	<h2>Name: {{user.name}}</h2>
-				<!--
-
-				<img ng-src="http://www.gravatar.com/avatar/{{user.gravatar_id}}" title="{{user.login}}">
-			-->
-	<img ng-src="{{user.avatar_url}}" title="{{user.username}}">
-</div>
-
-		Order:
-		<select ng-model="repoSortOrder">
-			<option value="name">Name</option>
-			<option value="-stargazers_count">Stars</option>
-			<option value="language">Language</option>
-		</select>
-
-		<table >
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Stars</th>
-					<th>Language</th>	
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="repo in repos | orderBy: repoSortOrder">
-					<td>{{repo.name}}</td>
-					<td>{{repo.stargazers_count | number}}</td>
-					<td>{{repo.language}}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
 </body>
+
 </html>

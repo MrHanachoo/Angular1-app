@@ -1,19 +1,19 @@
-<div>
-	<h2>Name: {{user.name}}</h2>
+<div id="userDetails">
+		<div>
+			<h2>Name: {{user.name}}</h2>
 				<!--
 				<img ng-src="http://www.gravatar.com/avatar/{{user.gravatar_id}}" title="{{user.login}}">
 			-->
-	<img ng-src="{{user.avatar_url}}" title="{{user.username}}">
-</div>
+			<img ng-src="{{user.avatar_url}}" title="{{user.username}}" style="weight: 100px; height: 100px;">
+			Order:
+			<select ng-model="repoSortOrder">
+				<option value="name">Name</option>
+				<option value="-stargazers_count">Stars</option>
+				<option value="language">Language</option>
+			</select>
+		</div>
 
-		Order:
-		<select ng-model="repoSortOrder">
-			<option value="name">Name</option>
-			<option value="-stargazers_count">Stars</option>
-			<option value="language">Language</option>
-		</select>
-
-		<table >
+		<table>
 			<thead>
 				<tr>
 					<th>Name</th>
@@ -29,3 +29,4 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>

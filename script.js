@@ -2,33 +2,54 @@
 
 	var app = angular.module("githubViewer", []);
 
-	var MainController = function(s, w){
+	var MainController = function(
+			$scope, github, $interval,
+			$log, $anchorScroll, $location){
 		
-		var onUserComplete = function(response){
-			s.user = response.data;
-			w.get(s.user.repos_url)
-			.then(onRepos, onError);
+		var onUserComplete = function(data){
+			$scope.user = data;
+			github.getRepos($scope.user).then(onRepos, onError);
 		};
 
-		var onRepos = function(response){
-			s.repos = response.data;
+		var onRepos = function(data){
+			$scope.repos = data;
+			$location.hash("userDetails");
+			$anchorScroll();
 		}
 
 		var onError = function(reason){
-			s.error = "could not fetch the user";
+			$scope.error = "could not fetch the user";
 		};
 
-		s.search = function(username){
-			w.get("https://api.github.com/users/" + username)
-		.then(onUserComplete, onError);
+		var decrementCountdown = function(){
+			$scope.countdown -= 1;
+			if($scope.countdown <1){
+				$scope.search($scope.username);
+			}
+		};
+
+		var countdownInterval = null;
+		var startCountdown = function () {
+			countdownInterval = $interval(
+					decrementCountdown, 1000, $scope.countdown);
+		};
+
+		$scope.search = function(username){
+			$log.info("Searching for "+ username);
+			github.getUser(username).then(onUserComplete, onError);
+			if(countdownInterval){
+				$interval.cancel(countdownInterval);
+				$scope.countdown = null;
+			}
 		};
 		
-		s.username = "angular";
-		s.message = "GitHub Viewer";
-		s.repoSortOrder = "-stargazers_count";
-
+		$scope.username = "angular";
+		$scope.message = "GitHub Viewer";
+		$scope.repoSortOrder = "-stargazers_count";
+		$scope.countdown = 5;
+		startCountdown();
 	};
 
-	app.controller("MainController", ["$scope", "$http", MainController]);
+	app.controller("MainController",  MainController);
 
 }());
